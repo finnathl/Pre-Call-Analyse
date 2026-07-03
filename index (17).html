@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kostenlose Analyse · leanwithfinn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f9f7;
+      --white: #ffffff;
+      --text: #111111;
+      --muted: #888;
+      --border: #e5e5e5;
+      --accent: #111111;
+      --accent-light: #f0f0ee;
+      --green: #2d6a4f;
+      --radius: 10px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      background: var(--white);
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .header-tag {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 12px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 56px 0 40px;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: #555;
+      max-width: 440px;
+      margin-bottom: 28px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+    }
+
+    /* PROGRESS */
+    .progress-wrap {
+      padding: 0 0 32px;
+    }
+
+    .progress-bar-bg {
+      height: 3px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--text);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* STEPS */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 12px;
+    }
+
+    .q-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .q-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .q-sub {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+
+    /* Options */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .opt {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      background: var(--white);
+      user-select: none;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .opt:hover {
+      border-color: #aaa;
+      background: var(--accent-light);
+    }
+
+    .opt.selected {
+      border-color: var(--text);
+      background: var(--text);
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* Text input */
+    .text-field {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      resize: none;
+      outline: none;
+      transition: border-color 0.15s;
+      line-height: 1.5;
+    }
+
+    .text-field:focus { border-color: var(--text); }
+    .text-field::placeholder { color: #bbb; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    /* Error */
+    .err {
+      font-size: 12px;
+      color: #c0392b;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Nav */
+    .step-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .btn-back {
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      padding: 0;
+    }
+
+    .btn-back:hover { color: var(--text); }
+
+    .btn-next {
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 28px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-next:hover { opacity: 0.82; }
+
+    /* Contact step */
+    .contact-note {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    /* Submit */
+    .btn-submit {
+      width: 100%;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px;
+      cursor: pointer;
+      letter-spacing: -0.02em;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+
+    .btn-submit:hover { opacity: 0.82; }
+
+    .submit-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* Review card */
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .review-row {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .review-key {
+      color: var(--muted);
+      min-width: 110px;
+      flex-shrink: 0;
+    }
+
+    .review-val {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Success */
+    #successScreen {
+      display: none;
+      padding: 80px 20px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+
+    #successScreen h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    #successScreen p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Divider */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    /* Credibility note */
+    .hero-credibility {
+      border-left: 2px solid var(--text);
+      padding-left: 14px;
+      margin-bottom: 28px;
+      max-width: 440px;
+    }
+
+    .hero-credibility p {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    /* Price note inside step */
+    .price-note {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .field-row { grid-template-columns: 1fr; }
+      .step-card { padding: 22px 18px; }
+      .hero { padding: 40px 0 28px; }
+      .hero-meta { flex-wrap: wrap; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">leanwithfinn     <span>Coaching</span></div>
+    <div class="header-tag">Kostenlos & unverbindlich</div>
+  </div>
+</header>
+
+<div id="mainWrap">
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-eyebrow">Pre-Call Analyse</div>
+      <h1>Lass uns herausfinden,<br />was dich wirklich aufhält.</h1>
+      <p>8 kurze Fragen, damit ich vor unserem Gespräch verstehe, wo du stehst und wie ich dir konkret helfen kann.</p>
+      <div class="hero-credibility">
+        <p>Ich hab's selbst gemacht: in 3,5 Jahren 15 kg Muskelmasse aufgebaut, komplett neben Studium und Job und ohne Crash-Diäten. Genau ein solches System gebe ich dir 1:1 weiter!</p>
+      </div>
+      <div class="hero-meta">
+        <span><div class="dot"></div>8 Fragen</span>
+        <span><div class="dot"></div>ca. 4 Minuten</span>
+        <span><div class="dot"></div>Keine Verpflichtung</span>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">Frage 1 von 8</div>
+    </div>
+
+    <!-- STEP 1: Kontakt -->
+    <div class="step active" id="step1">
+      <div class="step-card">
+        <div class="q-num">Frage 1 von 8</div>
+        <div class="q-title">Wer bist du?</div>
+        <div class="q-sub">Damit ich weiß, mit wem ich spreche.</div>
+
+        <div class="field-row">
+          <div>
+            <div class="field-label">Vorname *</div>
+            <input class="text-field" type="text" id="firstName" placeholder="Max" />
+          </div>
+          <div>
+            <div class="field-label">Alter *</div>
+            <input class="text-field" type="text" id="age" placeholder="23" />
+          </div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div class="field-label">E-Mail *</div>
+          <input class="text-field" type="email" id="email" placeholder="max@mail.de" />
+        </div>
+        <div>
+          <div class="field-label">Instagram (optional)</div>
+          <input class="text-field" type="text" id="insta" placeholder="@maxmustermann" />
+        </div>
+        <div class="err" id="err1">Bitte fülle Vorname, Alter und E-Mail aus.</div>
+      </div>
+      <div class="step-nav">
+        <span></span>
+        <button class="btn-next" onclick="go(1)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Ziel -->
+    <div class="step" id="step2">
+      <div class="step-card">
+        <div class="q-num">Frage 2 von 8</div>
+        <div class="q-title">Was willst du erreichen?</div>
+        <div class="q-sub">Kein falsches Ziel. Ehrlich ist besser als korrekt klingend.</div>
+        <div class="options" id="goalOpts">
+          <div class="opt" onclick="multi(this)">Muskeln aufbauen und definierter werden</div>
+          <div class="opt" onclick="multi(this)">Fett verlieren und mich wohler fühlen</div>
+          <div class="opt" onclick="multi(this)">Beides: Körper komplett verändern</div>
+          <div class="opt" onclick="multi(this)">Fitter werden und mehr Energie im Alltag</div>
+          <div class="opt" onclick="multi(this)">Gewicht halten und Körper straffen</div>
+          <div class="opt" onclick="multi(this)">Abnehmen ohne Muskeln zu verlieren</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px">Mehrfachauswahl möglich</div>
+        <div class="err" id="err2">Wähle mindestens eine Option.</div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(2)">← Zurück</button>
+        <button class="btn-next" onclick="go(2)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Situation -->
+    <div class="step" id="step3">
+      <div class="step-card">
+        <div class="q-num">Frage 3 von 8</div>
+        <div class="q-title">Wie sieht dein Alltag gerade aus?</div>
+        <div class="q-sub">Das beeinflusst alles. Training, Ernährung, Energie.</div>
+        <div class="options" id="situOpts">
+          <div class="opt" onclick="pick(this,'situOpts')">Student (Vorlesungen, Prüfungen, wenig Routine)</div>
+          <div class="opt" onclick="pick(this,'situOpts')">Berufstätig (langer Arbeitstag, nach Feierabend kaum Energie)</div>
+          <div class="opt" onclick="pick(this,'situOpts')">Beides: Uni und Job gleichzeitig</div>
+          <div class="opt" onclick="pickAnderes(this)">Anderes</div>
+        </div>
+        <input class="text-field" type="text" id="situAnderes" placeholder="Anderes" style="display:none;margin-top:8px" />
+        <div class="err" id="err3">Bitte wähle eine Option.</div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(3)">← Zurück</button>
+        <button class="btn-next" onclick="go(3)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Blocker -->
+    <div class="step" id="step4">
+      <div class="step-card">
+        <div class="q-num">Frage 4 von 8</div>
+        <div class="q-title">Was hält dich gerade auf?</div>
+        <div class="q-sub">Das ist die wichtigste Frage. Ehrlich sein!</div>
+        <div class="options" id="blockOpts">
+          <div class="opt" onclick="multi(this,'blockOpts')">Keine Zeit oder Energie nach Uni / Job</div>
+          <div class="opt" onclick="multi(this,'blockOpts')">Ernährung ist chaotisch, kein fester Plan</div>
+          <div class="opt" onclick="multi(this,'blockOpts')">Ich trainiere, sehe aber keinen Fortschritt</div>
+          <div class="opt" onclick="multi(this,'blockOpts')">Kein System, weiß nicht wo ich anfangen soll</div>
+          <div class="opt" onclick="multi(this,'blockOpts')">Motivation bricht immer irgendwann weg</div>
+          <div class="opt" onclick="multi(this,'blockOpts')">Alles auf einmal - ich bin schlicht überfordert</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px">Mehrfachauswahl möglich</div>
+        <div class="err" id="err4">Wähle mindestens eine Option.</div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(4)">← Zurück</button>
+        <button class="btn-next" onclick="go(4)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Bisher -->
+    <div class="step" id="step5">
+      <div class="step-card">
+        <div class="q-num">Frage 5 von 8</div>
+        <div class="q-title">Was hast du bisher probiert?</div>
+        <div class="q-sub">Kein Maßstab. Ich will nur verstehen, was schon da war.</div>
+        <div class="options" id="triedOpts">
+          <div class="opt" onclick="multi(this,'triedOpts')">YouTube-Pläne und kostenlose Workouts</div>
+          <div class="opt" onclick="multi(this,'triedOpts')">Verschiedene Diäten ausprobiert</div>
+          <div class="opt" onclick="multi(this,'triedOpts')">Kalorienzählen oder App-Tracking</div>
+          <div class="opt" onclick="multi(this,'triedOpts')">Schon mal ein Coaching gemacht</div>
+          <div class="opt" onclick="multi(this,'triedOpts')">Einfach drauflos trainiert ohne Plan</div>
+          <div class="opt" onclick="multi(this,'triedOpts')">Noch nichts Konkretes - starte gerade erst</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px">Mehrfachauswahl möglich</div>
+        <div class="err" id="err5">Wähle mindestens eine Option.</div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(5)">← Zurück</button>
+        <button class="btn-next" onclick="go(5)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Warum jetzt -->
+    <div class="step" id="step6">
+      <div class="step-card">
+        <div class="q-num">Frage 6 von 8</div>
+        <div class="q-title">Warum willst du jetzt etwas ändern?</div>
+        <div class="q-sub">Was hat sich verändert oder was reicht dir langsam?</div>
+        <div class="options" id="whyOpts">
+          <div class="opt" onclick="pick(this,'whyOpts')">Ich bin unzufrieden mit meinem Körper und hab's satt</div>
+          <div class="opt" onclick="pick(this,'whyOpts')">Ich hab ein konkretes Ziel (Event, Urlaub, Wettkampf)</div>
+          <div class="opt" onclick="pick(this,'whyOpts')">Alleine komme ich nicht weiter – ich brauche jemanden</div>
+          <div class="opt" onclick="pick(this,'whyOpts')">Ich will mich fitter und energievoller fühlen</div>
+          <div class="opt" onclick="pick(this,'whyOpts')">Ich will endlich ein System, das zu meinem Leben passt</div>
+        </div>
+        <div class="err" id="err6">Bitte wähle eine Option.</div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(6)">← Zurück</button>
+        <button class="btn-next" onclick="go(6)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 7: Investition -->
+    <div class="step" id="step7">
+      <div class="step-card">
+        <div class="q-num">Frage 7 von 8</div>
+        <div class="q-title">Eine ehrliche Frage zur Investition</div>
+        <div class="q-sub">Damit unser Gespräch für uns beide Sinn ergibt.</div>
+        <p class="price-note">Mein 1:1 Coaching läuft über ein monatliches (flexibel), 4 oder 12 Monate (einmalig) und beinhaltet deinen individuellen Trainings- und Ernährungsplan, laufende Calls und persönliche Betreuung. Je nach Laufzeit liegt die Investition zwischen 150 € und 1.350 €.</p>
+        <div class="options" id="budgetOpts">
+          <div class="opt" onclick="pick(this,'budgetOpts')">Ja, das passt für mich</div>
+          <div class="opt" onclick="pick(this,'budgetOpts')">Eventuell, kommt auf den Call an</div>
+          <div class="opt" onclick="pick(this,'budgetOpts')">Eher nicht, das sprengt aktuell meinen Rahmen</div>
+        </div>
+        <div class="err" id="err7">Bitte wähle eine Option.</div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(7)">← Zurück</button>
+        <button class="btn-next" onclick="go(7)">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- STEP 8: Freitext + Absenden -->
+    <div class="step" id="step8">
+      <div class="step-card">
+        <div class="q-num">Frage 8 von 8</div>
+        <div class="q-title">Was soll ich noch wissen?</div>
+        <div class="q-sub">Verletzungen, besondere Umstände, eine Frage oder warum du glaubst, dass du bisher nicht weiterkommst.</div>
+        <textarea class="text-field" id="extra" rows="4" placeholder="Optional - aber je mehr Kontext, desto besser kann ich dir helfen..."></textarea>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="step-card">
+        <div class="q-title" style="font-size:16px;margin-bottom:6px">Zusammenfassung</div>
+        <p style="font-size:13px;color:#777;margin-bottom:16px">Schau kurz drüber, dann geht's ab zu mir.</p>
+        <div class="review-list" id="reviewList"></div>
+        <button class="btn-submit" onclick="submitForm()">Absenden & Call anfragen →</button>
+        <p class="submit-note">Ich melde mich innerhalb von 24 Stunden bei dir.</p>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-back" onclick="back(8)">← Zurück</button>
+        <span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div id="successScreen">
+  <div class="success-icon">✓</div>
+  <h2>Danke – ich melde mich bald.</h2>
+  <p>Deine Antworten sind bei mir. Ich schreibe dir innerhalb von <strong>24 Stunden</strong> – dann reden wir darüber, wie ich dir helfen kann.</p>
+</div>
+
+<!-- Verstecktes Formular für Formspree (verhindert CORS-Fehler) -->
+<iframe name="hidden_iframe" style="display:none"></iframe>
+<form id="formspreeForm" action="https://formspree.io/f/xqevwklq" method="POST" target="hidden_iframe" style="display:none">
+  <input type="text" name="Name">
+  <input type="email" name="E-Mail">
+  <input type="text" name="Instagram">
+  <input type="text" name="Ziel">
+  <input type="text" name="Situation">
+  <input type="text" name="Was hält auf">
+  <input type="text" name="Bisher probiert">
+  <input type="text" name="Warum jetzt">
+  <input type="text" name="Investition">
+  <input type="text" name="Sonstiges">
+  <input type="hidden" name="_subject">
+  <input type="hidden" name="_replyto">
+</form>
+
+<script>
+  const TOTAL = 8;
+  let current = 1;
+
+  function updateProgress(n) {
+    const pct = ((n - 1) / TOTAL) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = n <= TOTAL
+      ? `Frage ${n} von ${TOTAL}`
+      : 'Abschluss';
+  }
+
+  function showStep(n) {
+    for (let i = 1; i <= TOTAL; i++) {
+      const s = document.getElementById('step' + i);
+      if (s) s.classList.toggle('active', i === n);
+    }
+    current = n;
+    updateProgress(n);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function pick(el, groupId) {
+    document.querySelectorAll('#' + groupId + ' .opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    // hide Anderes field if another option in situOpts is picked
+    if (groupId === 'situOpts') {
+      const f = document.getElementById('situAnderes');
+      if (f && !el.getAttribute('onclick').includes('pickAnderes')) f.style.display = 'none';
+    }
+  }
+
+  function pickAnderes(el) {
+    document.querySelectorAll('#situOpts .opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const field = document.getElementById('situAnderes');
+    field.style.display = 'block';
+    field.focus();
+  }
+
+  function multi(el) {
+    el.classList.toggle('selected');
+  }
+
+  function getSelected(groupId) {
+    return [...document.querySelectorAll('#' + groupId + ' .opt.selected')].map(o => o.textContent.trim());
+  }
+
+  function showErr(id, show) {
+    document.getElementById(id).style.display = show ? 'block' : 'none';
+  }
+
+  function validate(n) {
+    if (n === 1) {
+      const ok = document.getElementById('firstName').value.trim()
+        && document.getElementById('age').value.trim()
+        && document.getElementById('email').value.includes('@');
+      showErr('err1', !ok); return ok;
+    }
+    if (n === 2) { const ok = !!getSelected('goalOpts').length; showErr('err2', !ok); return ok; }
+    if (n === 3) { const ok = !!getSelected('situOpts').length; showErr('err3', !ok); return ok; }
+    if (n === 4) { const ok = !!getSelected('blockOpts').length; showErr('err4', !ok); return ok; }
+    if (n === 5) { const ok = !!getSelected('triedOpts').length; showErr('err5', !ok); return ok; }
+    if (n === 6) { const ok = !!getSelected('whyOpts').length; showErr('err6', !ok); return ok; }
+    if (n === 7) { const ok = !!getSelected('budgetOpts').length; showErr('err7', !ok); return ok; }
+    return true;
+  }
+
+  function go(n) {
+    if (!validate(n)) return;
+    if (n === 7) buildReview();
+    showStep(n + 1);
+  }
+
+  function back(n) { showStep(n - 1); }
+
+  function buildReview() {
+    const rows = [
+      ['Name', document.getElementById('firstName').value.trim() + ', ' + document.getElementById('age').value.trim() + ' J.'],
+      ['Ziel', getSelected('goalOpts').join(', ')],
+      ['Situation', getSelected('situOpts').join(', ')],
+      ['Blocker', getSelected('blockOpts').join(' · ')],
+      ['Bisher', getSelected('triedOpts').join(' · ')],
+      ['Warum jetzt', getSelected('whyOpts').join(', ')],
+      ['Investition', getSelected('budgetOpts').join(', ')],
+    ];
+    document.getElementById('reviewList').innerHTML = rows.map(([k, v]) =>
+      `<div class="review-row"><span class="review-key">${k}</span><span class="review-val">${v}</span></div>`
+    ).join('');
+  }
+
+  async function submitForm() {
+    const name    = document.getElementById('firstName').value.trim();
+    const age     = document.getElementById('age').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const insta   = document.getElementById('insta').value.trim();
+    const goal    = getSelected('goalOpts').join(', ');
+    const situSel = getSelected('situOpts');
+    const situAnderes = document.getElementById('situAnderes').value.trim();
+    const situ = situSel.map(s => s === 'Anderes' && situAnderes ? situAnderes : s).join(', ');
+    const blocks  = getSelected('blockOpts').join(', ');
+    const tried   = getSelected('triedOpts').join(', ');
+    const why     = getSelected('whyOpts').join(', ');
+    const budget  = getSelected('budgetOpts').join(', ');
+    const extra   = document.getElementById('extra').value.trim();
+
+    const payload = {
+      Name: `${name}, ${age} Jahre`,
+      'E-Mail': email,
+      Instagram: insta || '–',
+      Ziel: goal,
+      Situation: situ,
+      'Was hält auf': blocks,
+      'Bisher probiert': tried,
+      'Warum jetzt': why,
+      Investition: budget,
+      Sonstiges: extra || '–',
+      _subject: `Pre-Call Analyse – ${name}`,
+      _replyto: email
+    };
+
+    const btn = document.querySelector('.btn-submit');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet...';
+
+    // Verstecktes Formular befüllen
+    const form = document.getElementById('formspreeForm');
+    form.querySelector('[name="Name"]').value = payload.Name;
+    form.querySelector('[name="E-Mail"]').value = payload['E-Mail'];
+    form.querySelector('[name="Instagram"]').value = payload.Instagram;
+    form.querySelector('[name="Ziel"]').value = payload.Ziel;
+    form.querySelector('[name="Situation"]').value = payload.Situation;
+    form.querySelector('[name="Was hält auf"]').value = payload['Was hält auf'];
+    form.querySelector('[name="Bisher probiert"]').value = payload['Bisher probiert'];
+    form.querySelector('[name="Warum jetzt"]').value = payload['Warum jetzt'];
+    form.querySelector('[name="Investition"]').value = payload.Investition;
+    form.querySelector('[name="Sonstiges"]').value = payload.Sonstiges;
+    form.querySelector('[name="_subject"]').value = payload._subject;
+    form.querySelector('[name="_replyto"]').value = payload._replyto;
+
+    // Nach dem Laden des versteckten iframes gilt der Versand als abgeschlossen
+    const iframe = document.querySelector('iframe[name="hidden_iframe"]');
+    iframe.onload = function () {
+      document.getElementById('mainWrap').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    form.submit();
+  }
+
+  updateProgress(1);
+</script>
+</body>
+</html>
