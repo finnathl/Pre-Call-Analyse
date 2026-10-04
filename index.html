@@ -435,10 +435,12 @@
       <h1>Lass uns herausfinden,<br />was dich wirklich aufhält.</h1>
       <p>8 kurze Fragen, damit ich verstehe, wo du stehst und wie ich dir konkret helfen kann.</p>
       <div class="hero-credibility">
-        <p>Ich hab's selbst gemacht: in 3,5 Jahren 15 kg Muskelmasse aufgebaut, neben Studium und Job. Genau ein solches System gebe ich dir 1:1 weiter!</p>
+        <p>Ich hab's selbst gemacht: in 3,5 Jahren 15 kg Muskelmasse aufgebaut, neben Studium und Job.<br><br>
+           Genau ein solches System gebe ich dir 1:1 weiter!
+        </p>
       </div>
       <div class="hero-meta">
-        <span><div class="dot"></div>8 Fragen</span>
+        <span><div class="dot"></div>7 Fragen</span>
         <span><div class="dot"></div>ca. 4 Minuten</span>
         <span><div class="dot"></div>Keine Verpflichtung</span>
       </div>
@@ -448,13 +450,13 @@
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="progressBar"></div>
       </div>
-      <div class="progress-label" id="progressLabel">Frage 1 von 8</div>
+      <div class="progress-label" id="progressLabel">Frage 1 von 7</div>
     </div>
 
     <!-- STEP 1: Kontakt -->
     <div class="step active" id="step1">
       <div class="step-card">
-        <div class="q-num">Frage 1 von 8</div>
+        <div class="q-num">Frage 1 von 7</div>
         <div class="q-title">Wer bist du?</div>
         <div class="q-sub">Damit ich weiß, mit wem ich spreche.</div>
 
@@ -464,9 +466,13 @@
             <input class="text-field" type="text" id="firstName" placeholder="Max" />
           </div>
           <div>
-            <div class="field-label">Alter *</div>
-            <input class="text-field" type="text" id="age" placeholder="21" />
+            <div class="field-label">Nachname *</div>
+            <input class="text-field" type="text" id="lastName" placeholder="Mustermann" />
           </div>
+          <div style="margin-bottom:10px">
+            <div class="field-label">Alter *</div>
+            <input class="text-field" type="email" id="email" placeholder="maxmustermann@gmail.com" />
+        </div>
         </div>
         <div style="margin-bottom:10px">
           <div class="field-label">E-Mail *</div>
@@ -476,7 +482,7 @@
           <div class="field-label">Instagram (optional)</div>
           <input class="text-field" type="text" id="insta" placeholder="@maxmustermann" />
         </div>
-        <div class="err" id="err1">Bitte fülle Vorname, Alter und E-Mail aus.</div>
+        <div class="err" id="err1">Bitte fülle Vornamen, Nachname, Alter und E-Mail aus.</div>
       </div>
       <div class="step-nav">
         <span></span>
@@ -487,9 +493,9 @@
     <!-- STEP 2: Ziel -->
     <div class="step" id="step2">
       <div class="step-card">
-        <div class="q-num">Frage 2 von 8</div>
+        <div class="q-num">Frage 2 von 7</div>
         <div class="q-title">Was willst du erreichen?</div>
-        <div class="q-sub">Kein falsches Ziel. Ehrlich ist besser als korrekt klingend.</div>
+        <div class="q-sub">Keine falsche Antwort, sei einfach ehrlich zu dir.</div>
         <div class="options" id="goalOpts">
           <div class="opt" onclick="multi(this)">Muskeln aufbauen und definierter werden</div>
           <div class="opt" onclick="multi(this)">Fett verlieren und mich wohler fühlen</div>
@@ -510,9 +516,9 @@
     <!-- STEP 3: Situation -->
     <div class="step" id="step3">
       <div class="step-card">
-        <div class="q-num">Frage 3 von 8</div>
+        <div class="q-num">Frage 3 von 7</div>
         <div class="q-title">Wie sieht dein Alltag gerade aus?</div>
-        <div class="q-sub">Das beeinflusst alles. Training, Ernährung, Energie.</div>
+        <div class="q-sub">Das wirkt sich auf alles aus, auf dein Training, deine Ernährung und deine Energie.</div>
         <div class="options" id="situOpts">
           <div class="opt" onclick="pick(this,'situOpts')">Student (Vorlesungen, Prüfungen, wenig Routine)</div>
           <div class="opt" onclick="pick(this,'situOpts')">Berufstätig (langer Arbeitstag, nach Feierabend kaum Energie)</div>
@@ -531,7 +537,7 @@
     <!-- STEP 4: Blocker -->
     <div class="step" id="step4">
       <div class="step-card">
-        <div class="q-num">Frage 4 von 8</div>
+        <div class="q-num">Frage 4 von 7</div>
         <div class="q-title">Was hält dich gerade auf?</div>
         <div class="q-sub">Das ist die wichtigste Frage. Ehrlich sein!</div>
         <div class="options" id="blockOpts">
@@ -554,9 +560,9 @@
     <!-- STEP 5: Bisher -->
     <div class="step" id="step5">
       <div class="step-card">
-        <div class="q-num">Frage 5 von 8</div>
+        <div class="q-num">Frage 5 von 7</div>
         <div class="q-title">Was hast du bisher probiert?</div>
-        <div class="q-sub">Kein Maßstab. Ich will nur verstehen, was schon da war.</div>
+        <div class="q-sub">Es gibt kein richtig oder falsch, ich will nur wissen, wo du gerade stehst.</div>
         <div class="options" id="triedOpts">
           <div class="opt" onclick="multi(this,'triedOpts')">YouTube-Pläne und kostenlose Workouts</div>
           <div class="opt" onclick="multi(this,'triedOpts')">Verschiedene Diäten ausprobiert</div>
@@ -577,7 +583,7 @@
     <!-- STEP 6: Warum jetzt -->
     <div class="step" id="step6">
       <div class="step-card">
-        <div class="q-num">Frage 6 von 8</div>
+        <div class="q-num">Frage 6 von 7</div>
         <div class="q-title">Warum willst du jetzt etwas ändern?</div>
         <div class="q-sub">Was hat sich verändert oder was reicht dir langsam?</div>
         <div class="options" id="whyOpts">
@@ -595,30 +601,10 @@
       </div>
     </div>
 
-    <!-- STEP 7: Investition -->
+    <!-- STEP 7: Freitext + Absenden -->
     <div class="step" id="step7">
       <div class="step-card">
-        <div class="q-num">Frage 7 von 8</div>
-        <div class="q-title">Eine ehrliche Frage zur Investition</div>
-        <div class="q-sub">Damit unser Gespräch für uns beide Sinn ergibt.</div>
-        <p class="price-note">Mein 1:1 Coaching läuft über ein monatliches (flexibel), 4 oder 12 Monate (einmalig) und beinhaltet deinen individuellen Trainings- und Ernährungsplan, laufende Calls und persönliche Betreuung. Je nach Laufzeit liegt die Investition zwischen 150 € und 1.350 €.</p>
-        <div class="options" id="budgetOpts">
-          <div class="opt" onclick="pick(this,'budgetOpts')">Ja, das passt für mich</div>
-          <div class="opt" onclick="pick(this,'budgetOpts')">Eventuell, kommt auf den Call an</div>
-          <div class="opt" onclick="pick(this,'budgetOpts')">Eher nicht, das sprengt aktuell meinen Rahmen</div>
-        </div>
-        <div class="err" id="err7">Bitte wähle eine Option.</div>
-      </div>
-      <div class="step-nav">
-        <button class="btn-back" onclick="back(7)">← Zurück</button>
-        <button class="btn-next" onclick="go(7)">Weiter →</button>
-      </div>
-    </div>
-
-    <!-- STEP 8: Freitext + Absenden -->
-    <div class="step" id="step8">
-      <div class="step-card">
-        <div class="q-num">Frage 8 von 8</div>
+        <div class="q-num">Frage 7 von 7</div>
         <div class="q-title">Was soll ich noch wissen?</div>
         <div class="q-sub">Verletzungen, besondere Umstände, eine Frage oder warum du glaubst, dass du bisher nicht weiterkommst.</div>
         <textarea class="text-field" id="extra" rows="4" placeholder="Optional - aber je mehr Kontext, desto besser kann ich dir helfen..."></textarea>
@@ -630,12 +616,12 @@
         <div class="q-title" style="font-size:16px;margin-bottom:6px">Zusammenfassung</div>
         <p style="font-size:13px;color:#777;margin-bottom:16px">Schau kurz drüber, dann geht's ab zu mir.</p>
         <div class="review-list" id="reviewList"></div>
-        <button class="btn-submit" onclick="submitForm()">Absenden & Call anfragen →</button>
+        <button class="btn-submit" onclick="submitForm()">Absenden & Coaching anfragen →</button>
         <p class="submit-note">Ich melde mich innerhalb von 24 Stunden bei dir.</p>
       </div>
 
       <div class="step-nav">
-        <button class="btn-back" onclick="back(8)">← Zurück</button>
+        <button class="btn-back" onclick="back(6)">← Zurück</button>
         <span></span>
       </div>
     </div>
